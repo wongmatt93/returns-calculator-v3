@@ -1,28 +1,24 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
+import StocksContext from "../context/StocksContext";
 import Stock from "../models/Stock";
 import "./SellSharesForm.css";
 
 interface Props {
-  indStock: Stock;
-  onSellShares: (
-    stock: Stock,
-    amount: number,
-    quantity: number,
-    date: string
-  ) => void;
+  stock: Stock;
 }
 
-const SellSharesForm = ({ indStock, onSellShares }: Props) => {
+const SellSharesForm = ({ stock }: Props) => {
+  const { sellShares } = useContext(StocksContext);
   const [amount, setAmount] = useState<number>(0);
   const [quantity, setQuantity] = useState<number>(0);
   const [date, setDate] = useState<string>("");
 
   const handleSubmit = (e: FormEvent): void => {
     e.preventDefault();
-    if (quantity > indStock.quantity) {
+    if (quantity > stock.quantity) {
       alert("You cannot sell more shares than you own");
     } else {
-      onSellShares(indStock, amount, quantity, date);
+      sellShares(stock, amount, quantity, date);
     }
   };
 

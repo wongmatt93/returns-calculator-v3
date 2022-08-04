@@ -1,33 +1,51 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
+import StocksContext from "../context/StocksContext";
 import Option from "../models/Option";
 import Stock from "../models/Stock";
+import { filterOptionsThatRequireStocks } from "../services/filterFunctions";
 import "./AddOptionsForm.css";
 
 interface Props {
-  indStock: Stock;
-  onAddOpenOptions: (option: Option) => void;
+  stock: Stock;
+  options: Option[];
 }
 
-const AddOptionsForm = ({ indStock, onAddOpenOptions }: Props) => {
-  const [date, setDate] = useState("");
-  const [type, setType] = useState("bto");
-  const [callPut, setCallPut] = useState("c");
-  const [strike, setStrike] = useState(0);
-  const [premium, setPremium] = useState(0);
-  const [expiration, setExpiration] = useState("");
+const AddOptionsForm = ({ stock, options }: Props) => {
+  const { addOpenOptions } = useContext(StocksContext);
+  const [date, setDate] = useState<string>("");
+  const [type, setType] = useState<string>("bto");
+  const [callPut, setCallPut] = useState<string>("c");
+  const [strike, setStrike] = useState<number>(0);
+  const [premium, setPremium] = useState<number>(0);
+  const [expiration, setExpiration] = useState<string>("");
+  const [quantity, setQuantity] = useState<number>(0);
 
   const handleSubmit = (e: FormEvent): void => {
     e.preventDefault();
-    onAddOpenOptions({
-      ticker: indStock.ticker,
-      transactionDate: date,
-      callPut: callPut,
-      type: type,
-      strike: strike,
-      expirationDate: expiration,
-      premium: premium,
-      open: true,
-    });
+    const maxQuantity: number = filterOptionsThatRequireStocks(options).length;
+    if (
+      (type === "sto" &&
+        callPut === "c" &&
+        quantity * 100 > stock.quantity - maxQuantity * 100) ||
+      (type === "bto" &&
+        callPut === "p" &&
+        quantity * 100 > stock.quantity - maxQuantity * 100)
+    ) {
+      alert("You do not own enough shares");
+    } else {
+      for (let i: number = 0; i < quantity; i++) {
+        addOpenOptions({
+          ticker: stock.ticker,
+          transactionDate: date,
+          callPut: callPut,
+          type: type,
+          strike: strike,
+          expirationDate: expiration,
+          premium: premium,
+          open: true,
+        });
+      }
+    }
   };
 
   return (
@@ -83,6 +101,14 @@ const AddOptionsForm = ({ indStock, onAddOpenOptions }: Props) => {
         id="premium"
         value={premium}
         onChange={(e) => setPremium(parseInt(e.target.value))}
+      />
+      <label htmlFor="quantity">Quantity</label>
+      <input
+        type="number"
+        name="quantity"
+        id="quantity"
+        value={quantity}
+        onChange={(e) => setQuantity(parseInt(e.target.value))}
       />
       <button>Add Option</button>
     </form>

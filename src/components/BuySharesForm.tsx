@@ -1,19 +1,26 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
+import StocksContext from "../context/StocksContext";
 import Stock from "../models/Stock";
 import "./BuySharesForm.css";
 
 interface Props {
-  indStock: Stock;
-  onBuyShares: (stock: Stock, quantity: number, cost: number) => void;
+  stock: Stock;
 }
 
-const BuySharesForm = ({ indStock, onBuyShares }: Props) => {
-  const [quantity, setQuantity] = useState(0);
-  const [cost, setCost] = useState(0);
+const BuySharesForm = ({ stock }: Props) => {
+  const { buyShares } = useContext(StocksContext);
+  const [quantity, setQuantity] = useState<number>(0);
+  const [cost, setCost] = useState<number>(0);
+  const [date, setDate] = useState<string>("");
 
   const handleSubmit = (e: FormEvent): void => {
     e.preventDefault();
-    onBuyShares(indStock, quantity, cost);
+    buyShares(stock, {
+      ticker: stock.ticker,
+      quantity: quantity,
+      cost: cost,
+      date: date,
+    });
   };
 
   return (
@@ -33,6 +40,14 @@ const BuySharesForm = ({ indStock, onBuyShares }: Props) => {
         id="cost"
         value={cost}
         onChange={(e) => setCost(parseInt(e.target.value))}
+      />
+      <label htmlFor="date">Cost</label>
+      <input
+        type="date"
+        name="date"
+        id="date"
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
       />
       <button>Buy Shares</button>
     </form>

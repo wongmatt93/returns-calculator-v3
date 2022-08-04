@@ -4,10 +4,10 @@ import "./StockTable.css";
 
 interface Props {
   stocks: Stock[];
-  onSetIndStock: (stock: Stock) => void;
+  // onSetIndStock: (stock: Stock) => void;
 }
 
-const StockTable = ({ stocks, onSetIndStock }: Props) => {
+const StockTable = ({ stocks }: Props) => {
   return (
     <table className="StockTable">
       <thead>
@@ -20,7 +20,11 @@ const StockTable = ({ stocks, onSetIndStock }: Props) => {
       </thead>
       <tbody>
         {stocks.map((stock) => (
-          <StockRow stock={stock} onSetIndStock={() => onSetIndStock(stock)} />
+          <StockRow
+            stock={stock}
+            key={stock.ticker}
+            // onSetIndStock={() => onSetIndStock(stock)}
+          />
         ))}
       </tbody>
     </table>

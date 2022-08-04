@@ -1,19 +1,20 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
+import StocksContext from "../context/StocksContext";
 import Dividend from "../models/Dividend";
 import "./AddDividendForm.css";
 
 interface Props {
   ticker: string;
-  onAddDividend: (dividend: Dividend) => void;
 }
 
-const AddDividendForm = ({ ticker, onAddDividend }: Props) => {
+const AddDividendForm = ({ ticker }: Props) => {
+  const { addDividend } = useContext(StocksContext);
   const [amount, setAmount] = useState<number>(0);
   const [date, setDate] = useState<string>("");
 
   const handleSubmit = (e: FormEvent): void => {
     e.preventDefault();
-    onAddDividend({
+    addDividend({
       ticker: ticker,
       amount: amount,
       date: date,

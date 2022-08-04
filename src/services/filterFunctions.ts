@@ -33,6 +33,13 @@ const filterCloseOptions = (options: Option[]): Option[] =>
 const filterStockOptions = (stock: Stock, options: Option[]): Option[] =>
   options.filter((option) => option.ticker === stock.ticker);
 
+const filterOptionsThatRequireStocks = (options: Option[]): Option[] =>
+  options.filter(
+    (option) =>
+      (option.type === "sto" && option.callPut === "c") ||
+      (option.type === "bto" && option.callPut === "p")
+  );
+
 export {
   filterStockDividends,
   filterStockSales,
@@ -43,4 +50,5 @@ export {
   filterOpenOptions,
   filterCloseOptions,
   filterStockOptions,
+  filterOptionsThatRequireStocks,
 };

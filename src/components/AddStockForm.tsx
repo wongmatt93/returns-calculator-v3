@@ -1,13 +1,15 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
+import StocksContext from "../context/StocksContext";
 import Stock from "../models/Stock";
 import "./AddStockForm.css";
 
-interface Props {
-  stocks: Stock[];
-  onAddStock: (newStock: Stock) => void;
-}
+// interface Props {
+//   stocks: Stock[];
+//   onAddStock: (newStock: Stock) => void;
+// }
 
-const AddStockForm = ({ stocks, onAddStock }: Props) => {
+const AddStockForm = () => {
+  const { stocks, addStock } = useContext(StocksContext);
   const [ticker, setTicker] = useState("");
 
   const handleSubmit = (e: FormEvent): void => {
@@ -16,7 +18,7 @@ const AddStockForm = ({ stocks, onAddStock }: Props) => {
     if (stocks.find((stock) => stock.ticker === newTicker)) {
       alert(`${newTicker} has already been added`);
     } else {
-      onAddStock({
+      addStock({
         ticker: newTicker,
         quantity: 0,
         originalCostBasis: 0,
