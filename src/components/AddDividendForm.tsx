@@ -1,6 +1,5 @@
 import { FormEvent, useContext, useState } from "react";
 import StocksContext from "../context/StocksContext";
-import Dividend from "../models/Dividend";
 import "./AddDividendForm.css";
 
 interface Props {

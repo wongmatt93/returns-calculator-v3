@@ -7,21 +7,30 @@ interface Props {
 }
 
 const StockOpenOptionsTable = ({ options }: Props) => {
+  const res: { [key: string]: any } = {};
+  options.forEach((option) => {
+    const key = `${option.ticker}${option["callPut"]}${option["type"]}${option["strike"]}${option["expirationDate"]}${option["open"]}`;
+    if (!res[key]) {
+      res[key] = { ...option, count: 0 };
+    }
+    res[key].count += 1;
+  });
+  const optionsByQuantity: Option[] = Object.values(res);
+
   return (
     <table className="StockOpenOptionsTable">
       <thead>
         <tr>
-          <th>Transaction Date</th>
           <th>Type</th>
           <th>Call/Put</th>
           <th>Strike</th>
           <th>Expiration</th>
-          <th>Premium</th>
+          <th>Quantity</th>
           <th>Status</th>
         </tr>
       </thead>
       <tbody>
-        {options.map((option) => (
+        {optionsByQuantity.map((option) => (
           <StockOpenOptionRow option={option} />
         ))}
       </tbody>

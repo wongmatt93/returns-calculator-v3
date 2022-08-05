@@ -41,19 +41,22 @@ const StockDetails = () => {
   const filteredStockSales: StockSale[] = filterStockSales(stock!, stockSales);
 
   useEffect(() => {
-    updateStockTotal(
-      stock!,
-      filteredStockSales,
-      filteredDividends,
-      filteredOptions
-    );
+    stock &&
+      updateStockTotal(
+        stock,
+        filteredStockSales,
+        filteredDividends,
+        filteredOptions
+      );
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stockSales, dividends, options]);
 
   const handleClick = (): void => {
-    deleteStock(stock!);
-    navigate("/");
+    if (window.confirm(`Are you sure you want to delete ${stock!.ticker}?`)) {
+      deleteStock(stock!);
+      navigate("/");
+    }
   };
 
   return (

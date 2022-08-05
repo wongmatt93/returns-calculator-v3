@@ -7,4 +7,5 @@ export default interface Option {
   expirationDate: string;
   premium: number;
   open?: boolean;
+  count?: number;
 }

@@ -9,12 +9,11 @@ interface Props {
 const StockOpenOptionRow = ({ option }: Props) => {
   return (
     <tr className="StockOpenOptionRow">
-      <td>{option.transactionDate}</td>
       <td>{option.type.toUpperCase()}</td>
       <td>{option.callPut.toUpperCase()}</td>
       <td>{formatMoney(option.strike)}</td>
       <td>{option.expirationDate}</td>
-      <td>{formatMoney(option.premium)}</td>
+      <td>{option.count}</td>
       <td>
         {option.open ? (
           option.type === "bto" ? (
