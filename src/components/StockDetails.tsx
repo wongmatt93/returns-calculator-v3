@@ -1,5 +1,5 @@
-import { useContext, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import StocksContext from "../context/StocksContext";
 import Option from "../models/Option";
 import Stock from "../models/Stock";
@@ -22,6 +22,8 @@ import {
 } from "../services/filterFunctions";
 import Dividend from "../models/Dividend";
 import AddCloseOptionsForm from "./AddCloseOptionsForm";
+import { getStockInfo } from "../services/AlphaAdvantageService";
+import AlphaAdvantageResponse from "../models/AlphaAdvantageResponse";
 
 const StockDetails = () => {
   const {
@@ -37,6 +39,9 @@ const StockDetails = () => {
   const stock: Stock | undefined = stocks.find(
     (stock) => stock.ticker === ticker!
   );
+  const [stockInfo, setStockInfo] = useState<
+    AlphaAdvantageResponse | undefined
+  >();
 
   const filteredDividends: Dividend[] = filterStockDividends(stock!, dividends);
   const filteredOptions: Option[] = filterStockOptions(stock!, options);
@@ -52,9 +57,14 @@ const StockDetails = () => {
         filteredDividends,
         filteredOptions
       );
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stockSales, dividends, options]);
+
+  useEffect(() => {
+    getStockInfo(ticker!).then((response) => {
+      setStockInfo(response);
+    });
+  }, []);
 
   const handleClick = (): void => {
     if (window.confirm(`Are you sure you want to delete ${stock!.ticker}?`)) {
@@ -67,7 +77,9 @@ const StockDetails = () => {
     <div className="StockDetails">
       {stock ? (
         <>
-          <h2>{stock.ticker}</h2>
+          <h2>
+            {stock.ticker}: {stockInfo?.Name}
+          </h2>
           <div>
             <button>Buy Shares</button>
             <button>Sell Shares</button>

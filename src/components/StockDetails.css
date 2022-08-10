@@ -5,6 +5,10 @@
   color: #d7ceb2;
 }
 
+.StockDetails h2 {
+  font-size: 1.7em;
+}
+
 .StockDetails .individual-stock-table {
   text-align: center;
 }
