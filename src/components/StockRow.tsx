@@ -18,11 +18,11 @@ const StockRow = ({ stock }: Props) => {
   return (
     <tr className="StockRow">
       <td onClick={() => handleClick()}>{stock.ticker}</td>
-      <td>{formatMoney(stock.originalCostBasis)}</td>
+      <td>{formatMoney(stock.costBasis)}</td>
       <td>{formatMoney(stock.cashReturn)}</td>
       <td>
-        {stock.originalCostBasis
-          ? formatPercent(stock.cashReturn, stock.originalCostBasis)
+        {stock.costBasis
+          ? formatPercent(stock.cashReturn, stock.costBasis)
           : "N/A"}
       </td>
     </tr>

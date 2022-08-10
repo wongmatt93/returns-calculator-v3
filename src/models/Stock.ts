@@ -1,7 +1,6 @@
 export default interface Stock {
   ticker: string;
   quantity: number;
-  originalCostBasis: number;
-  currentCostBasis: number;
+  costBasis: number;
   cashReturn: number;
 }

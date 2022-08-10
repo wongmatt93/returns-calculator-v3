@@ -1,0 +1,20 @@
+.StockDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #d7ceb2;
+}
+
+.StockDetails .individual-stock-table {
+  text-align: center;
+}
+
+.StockDetails .individual-stock-table th {
+  background-color: #66635b;
+  padding: 0.5em;
+}
+
+.StockDetails .individual-stock-table td {
+  background-color: #a59e8c;
+  padding: 0.5em;
+}

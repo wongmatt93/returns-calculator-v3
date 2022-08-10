@@ -17,8 +17,10 @@ const SellSharesForm = ({ stock }: Props) => {
     e.preventDefault();
     if (quantity > stock.quantity) {
       alert("You cannot sell more shares than you own");
-    } else {
+    } else if (stock.quantity) {
       sellShares(stock, amount, quantity, date);
+    } else {
+      alert("You don't own any shares");
     }
   };
 

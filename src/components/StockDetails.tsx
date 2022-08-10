@@ -6,20 +6,22 @@ import Stock from "../models/Stock";
 import StockSale from "../models/StockSale";
 import { formatMoney, formatPercent } from "../services/formatFunctions";
 import AddDividendForm from "./AddDividendForm";
-import AddOptionsForm from "./AddOptionsForm";
+import AddOpenOptionsForm from "./AddOpenOptionsForm";
 import BuySharesForm from "./BuySharesForm";
 import DividendTable from "./DividendTable";
 import "./StockDetails.css";
 import SellSharesForm from "./SellSharesForm";
-import StockCloseOptionsTable from "./StockCloseOptionsTable";
 import StockOpenOptionsTable from "./StockOpenOptionsTable";
-import StockSalesTable from "./StockSalesTable";
 import {
+  filterBTO,
+  filterSTO,
   filterStockDividends,
   filterStockOptions,
   filterStockSales,
+  removeClosedPositions,
 } from "../services/filterFunctions";
 import Dividend from "../models/Dividend";
+import AddCloseOptionsForm from "./AddCloseOptionsForm";
 
 const StockDetails = () => {
   const {
@@ -39,6 +41,8 @@ const StockDetails = () => {
   const filteredDividends: Dividend[] = filterStockDividends(stock!, dividends);
   const filteredOptions: Option[] = filterStockOptions(stock!, options);
   const filteredStockSales: StockSale[] = filterStockSales(stock!, stockSales);
+  let openBTO: Option[] = removeClosedPositions(filterBTO(filteredOptions));
+  let openSTO: Option[] = removeClosedPositions(filterSTO(filteredOptions));
 
   useEffect(() => {
     stock &&
@@ -64,13 +68,19 @@ const StockDetails = () => {
       {stock ? (
         <>
           <h2>{stock.ticker}</h2>
-          <button onClick={() => handleClick()}>Delete Stock</button>
-          <table>
+          <div>
+            <button>Buy Shares</button>
+            <button>Sell Shares</button>
+            <button>Add Dividends</button>
+            <button>Open Options</button>
+            <button onClick={() => handleClick()}>Delete Stock</button>
+          </div>
+          <table className="individual-stock-table">
             <thead>
               <tr>
                 <th>Quantity</th>
-                <th>Original Cost Basis</th>
-                <th>Current Cost Basis</th>
+                <th>Open Options</th>
+                <th>Cost Basis</th>
                 <th>Cash Return</th>
                 <th>Percent Return</th>
               </tr>
@@ -78,12 +88,15 @@ const StockDetails = () => {
             <tbody>
               <tr>
                 <td>{stock.quantity}</td>
-                <td>{formatMoney(stock.originalCostBasis)}</td>
-                <td>{formatMoney(stock.currentCostBasis)}</td>
+                <td>
+                  <div>{`BTO: ${openBTO.length}`}</div>
+                  <div>{`STO: ${openSTO.length}`}</div>
+                </td>
+                <td>{formatMoney(stock.costBasis)}</td>
                 <td>{formatMoney(stock.cashReturn)}</td>
                 <td>
-                  {stock.originalCostBasis
-                    ? formatPercent(stock.cashReturn, stock.originalCostBasis)
+                  {stock.costBasis
+                    ? formatPercent(stock.cashReturn, stock.costBasis)
                     : "N/A"}
                 </td>
               </tr>
@@ -91,11 +104,10 @@ const StockDetails = () => {
           </table>
           <BuySharesForm stock={stock} />
           <SellSharesForm stock={stock} />
-          <StockSalesTable stockSales={filteredStockSales} />
-          <AddOptionsForm stock={stock} options={filteredOptions} />
+          <AddOpenOptionsForm stock={stock} options={filteredOptions} />
+          <AddCloseOptionsForm stock={stock} />
           <StockOpenOptionsTable options={filteredOptions} />
-          <StockCloseOptionsTable />
-          <AddDividendForm ticker={stock.ticker} />
+          <AddDividendForm stock={stock} />
           <DividendTable dividends={filteredDividends} />
         </>
       ) : (

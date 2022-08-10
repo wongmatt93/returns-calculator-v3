@@ -4,7 +4,6 @@ import "./StockTable.css";
 
 interface Props {
   stocks: Stock[];
-  // onSetIndStock: (stock: Stock) => void;
 }
 
 const StockTable = ({ stocks }: Props) => {
@@ -13,19 +12,19 @@ const StockTable = ({ stocks }: Props) => {
       <thead>
         <tr>
           <th>Ticker</th>
-          <th>Original Cost Basis</th>
+          <th>Cost Basis</th>
           <th>Cash Returns</th>
           <th>Percent Returns</th>
         </tr>
       </thead>
       <tbody>
-        {stocks.map((stock) => (
-          <StockRow
-            stock={stock}
-            key={stock.ticker}
-            // onSetIndStock={() => onSetIndStock(stock)}
-          />
-        ))}
+        {stocks.length ? (
+          stocks.map((stock) => <StockRow stock={stock} key={stock.ticker} />)
+        ) : (
+          <tr>
+            <td colSpan={4}>No Stocks Added</td>
+          </tr>
+        )}
       </tbody>
     </table>
   );

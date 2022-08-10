@@ -11,6 +11,12 @@ interface StocksModel {
   stockSales: StockSale[];
   dividends: Dividend[];
   options: Option[];
+  updateStockTotal: (
+    stock: Stock,
+    stockSales: StockSale[],
+    dividends: Dividend[],
+    options: Option[]
+  ) => void;
   addStock: (stock: Stock) => void;
   deleteStock: (stock: Stock) => void;
   buyShares: (stock: Stock, stockPurchase: StockPurchase) => void;
@@ -22,11 +28,11 @@ interface StocksModel {
   ) => void;
   addDividend: (dividend: Dividend) => void;
   addOpenOptions: (option: Option) => void;
-  updateStockTotal: (
-    stock: Stock,
-    stockSales: StockSale[],
-    dividends: Dividend[],
-    options: Option[]
+  addCloseOptions: (
+    options: Option[],
+    openOptions: Option[],
+    option: Option,
+    quantity: number
   ) => void;
 }
 
@@ -36,13 +42,14 @@ const defaultValues: StocksModel = {
   stockSales: [],
   dividends: [],
   options: [],
+  updateStockTotal: () => {},
   addStock: () => {},
   deleteStock: () => {},
   buyShares: () => {},
   sellShares: () => {},
   addDividend: () => {},
   addOpenOptions: () => {},
-  updateStockTotal: () => {},
+  addCloseOptions: () => {},
 };
 
 const StocksContext = createContext(defaultValues);

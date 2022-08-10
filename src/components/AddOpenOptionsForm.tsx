@@ -3,20 +3,20 @@ import StocksContext from "../context/StocksContext";
 import Option from "../models/Option";
 import Stock from "../models/Stock";
 import { filterOptionsThatRequireStocks } from "../services/filterFunctions";
-import "./AddOptionsForm.css";
+import "./AddOpenOptionsForm.css";
 
 interface Props {
   stock: Stock;
   options: Option[];
 }
 
-const AddOptionsForm = ({ stock, options }: Props) => {
+const AddOpenOptionsForm = ({ stock, options }: Props) => {
   const { addOpenOptions } = useContext(StocksContext);
   const [date, setDate] = useState<string>("");
   const [type, setType] = useState<string>("bto");
   const [callPut, setCallPut] = useState<string>("c");
-  const [strike, setStrike] = useState<number>(0);
-  const [premium, setPremium] = useState<number>(0);
+  const [strike, setStrike] = useState<string>("");
+  const [premium, setPremium] = useState<string>("");
   const [expiration, setExpiration] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(0);
 
@@ -39,9 +39,9 @@ const AddOptionsForm = ({ stock, options }: Props) => {
           transactionDate: date,
           callPut: callPut,
           type: type,
-          strike: strike,
+          strike: parseFloat(strike),
           expirationDate: expiration,
-          premium: premium,
+          premium: parseFloat(premium),
           open: true,
         });
       }
@@ -49,7 +49,7 @@ const AddOptionsForm = ({ stock, options }: Props) => {
   };
 
   return (
-    <form className="AddOptionsForm" onSubmit={(e) => handleSubmit(e)}>
+    <form className="AddOpenOptionsForm" onSubmit={(e) => handleSubmit(e)}>
       <label htmlFor="date">Transaction Date</label>
       <input
         type="date"
@@ -84,7 +84,7 @@ const AddOptionsForm = ({ stock, options }: Props) => {
         name="strike"
         id="strike"
         value={strike}
-        onChange={(e) => setStrike(parseInt(e.target.value))}
+        onChange={(e) => setStrike(e.target.value)}
       />
       <label htmlFor="expiration">Expiration Date</label>
       <input
@@ -96,11 +96,11 @@ const AddOptionsForm = ({ stock, options }: Props) => {
       />
       <label htmlFor="premium">Premium</label>
       <input
-        type="number"
+        type="text"
         name="premium"
         id="premium"
         value={premium}
-        onChange={(e) => setPremium(parseInt(e.target.value))}
+        onChange={(e) => setPremium(e.target.value)}
       />
       <label htmlFor="quantity">Quantity</label>
       <input
@@ -115,4 +115,4 @@ const AddOptionsForm = ({ stock, options }: Props) => {
   );
 };
 
-export default AddOptionsForm;
+export default AddOpenOptionsForm;

@@ -1,0 +1,15 @@
+.Totals {
+  text-align: center;
+  color: #d7ceb2;
+}
+
+.Totals th {
+  background-color: #66635b;
+  padding: 10px;
+}
+
+.Totals td {
+  background-color: #a59e8c;
+  padding: 10px;
+  width: 33%;
+}

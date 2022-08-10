@@ -7,7 +7,7 @@ interface Props {
 }
 
 const Totals = ({ stocks }: Props) => {
-  const costBasis = stocks.reduce((pv, cv) => pv + cv.currentCostBasis, 0);
+  const costBasis = stocks.reduce((pv, cv) => pv + cv.costBasis, 0);
   const cashReturn = stocks.reduce((pv, cv) => pv + cv.cashReturn, 0);
   const percentReturn = costBasis
     ? formatPercent(cashReturn, costBasis)

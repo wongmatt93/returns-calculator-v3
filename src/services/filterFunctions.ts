@@ -27,6 +27,9 @@ const filterSTC = (options: Option[]): Option[] =>
 const filterOpenOptions = (options: Option[]): Option[] =>
   options.filter((option) => option.type.includes("o"));
 
+const removeClosedPositions = (options: Option[]): Option[] =>
+  options.filter((option) => option.open);
+
 const filterCloseOptions = (options: Option[]): Option[] =>
   options.filter((option) => option.type.includes("c"));
 
@@ -48,6 +51,7 @@ export {
   filterSTO,
   filterSTC,
   filterOpenOptions,
+  removeClosedPositions,
   filterCloseOptions,
   filterStockOptions,
   filterOptionsThatRequireStocks,

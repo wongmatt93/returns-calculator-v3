@@ -21,8 +21,7 @@ const AddStockForm = () => {
       addStock({
         ticker: newTicker,
         quantity: 0,
-        originalCostBasis: 0,
-        currentCostBasis: 0,
+        costBasis: 0,
         cashReturn: 0,
       });
     }
@@ -37,6 +36,7 @@ const AddStockForm = () => {
         id="ticker"
         value={ticker}
         onChange={(e) => setTicker(e.target.value)}
+        required
       />
       <button>Add</button>
     </form>

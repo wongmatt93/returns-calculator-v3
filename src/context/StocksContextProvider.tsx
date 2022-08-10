@@ -35,8 +35,7 @@ const StocksContextProvider = ({ children }: Props) => {
       const newList: Stock[] = prev.slice(0);
       const index = newList.findIndex((item) => item === stock);
       newList[index].quantity += stockPurchase.quantity;
-      newList[index].originalCostBasis += stockPurchase.cost;
-      newList[index].currentCostBasis += stockPurchase.cost;
+      newList[index].costBasis += stockPurchase.cost;
       return newList;
     });
   };
@@ -52,10 +51,10 @@ const StocksContextProvider = ({ children }: Props) => {
       const newList: Stock[] = prev.slice(0);
       const index: number = newList.findIndex((item) => item === stock);
       const remainder: number =
-        (quantity / newList[index].quantity) * newList[index].currentCostBasis;
+        (quantity / newList[index].quantity) * newList[index].costBasis;
       profit = amount - remainder;
       newList[index].quantity -= quantity;
-      newList[index].currentCostBasis -= remainder;
+      newList[index].costBasis -= remainder;
       return newList;
     });
     setStockSales((prev) => [
@@ -68,24 +67,6 @@ const StocksContextProvider = ({ children }: Props) => {
         quantity: quantity,
       },
     ]);
-  };
-
-  const addDividend = (dividend: Dividend): void =>
-    setDividends((prev) => [...prev, dividend]);
-
-  const addOpenOptions = (option: Option): void => {
-    setOptions((prev) => [...prev, option]);
-    if (option.type === "sto" && option.callPut === "p") {
-      setStocks((prev) => {
-        const newList: Stock[] = prev.slice(0);
-        const index = newList.findIndex(
-          (stock) => stock.ticker === option.ticker
-        );
-        newList[index].originalCostBasis += option.strike * 100;
-        newList[index].currentCostBasis += option.strike * 100;
-        return newList;
-      });
-    }
   };
 
   const updateStockTotal = (
@@ -106,6 +87,61 @@ const StocksContextProvider = ({ children }: Props) => {
     });
   };
 
+  const addDividend = (dividend: Dividend): void =>
+    setDividends((prev) => [...prev, dividend]);
+
+  const addOpenOptions = (option: Option): void => {
+    setOptions((prev) => [...prev, option]);
+    if (option.type === "sto" && option.callPut === "p") {
+      setStocks((prev) => {
+        const newList: Stock[] = prev.slice(0);
+        const index = newList.findIndex(
+          (stock) => stock.ticker === option.ticker
+        );
+        newList[index].costBasis += option.strike * 100;
+        return newList;
+      });
+    }
+  };
+
+  const addCloseOptions = (
+    options: Option[],
+    openOptions: Option[],
+    closeOption: Option,
+    quantity: number
+  ): void => {
+    if (quantity <= openOptions.length) {
+      for (let i: number = 0; i < quantity; i++) {
+        setOptions((prev) => [...prev, closeOption]);
+        setOptions((prev) => {
+          const newList: Option[] = prev.slice(0);
+          const index: number = options.findIndex(
+            (option) =>
+              option.ticker === closeOption.ticker &&
+              option.strike === closeOption.strike &&
+              option.callPut === closeOption.callPut &&
+              option.expirationDate === closeOption.expirationDate &&
+              option.open
+          );
+          newList[index].open = false;
+          return newList;
+        });
+        if (closeOption.type === "btc" && closeOption.callPut === "p") {
+          setStocks((prev) => {
+            const newList: Stock[] = prev.slice(0);
+            const index = newList.findIndex(
+              (stock) => stock.ticker === closeOption.ticker
+            );
+            newList[index].costBasis -= closeOption.strike * 100;
+            return newList;
+          });
+        }
+      }
+    } else {
+      alert("You cannot close more positions than are open");
+    }
+  };
+
   return (
     <StocksContext.Provider
       value={{
@@ -121,6 +157,7 @@ const StocksContextProvider = ({ children }: Props) => {
         sellShares,
         addDividend,
         addOpenOptions,
+        addCloseOptions,
       }}
     >
       {children}

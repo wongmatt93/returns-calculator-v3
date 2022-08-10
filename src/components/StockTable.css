@@ -1,0 +1,16 @@
+.StockTable {
+  text-align: center;
+  color: #d7ceb2;
+  table-layout: fixed;
+}
+
+.StockTable th {
+  background-color: #66635b;
+  padding: 0.5em;
+  width: 25%;
+}
+
+.StockTable td {
+  background-color: #a59e8c;
+  padding: 0.5em;
+}
