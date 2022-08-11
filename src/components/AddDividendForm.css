@@ -1,21 +1,28 @@
-.add-dividend-modal {
+.add-dividend-overlay {
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.add-dividend-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #48525b;
+  border-radius: 5px;
 }
 
 .add-dividend-modal form {
   display: flex;
   flex-direction: column;
-  background-color: #48525b;
   padding: 25px 30px 15px 30px;
-  border-radius: 5px;
 }
 
 .add-dividend-modal .dividend-inputs {

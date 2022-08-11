@@ -44,14 +44,23 @@ const StocksContextProvider = ({ children }: Props) => {
     stock: Stock,
     amount: number,
     quantity: number,
-    date: string
+    date: string,
+    options: Option[]
   ): void => {
     let profit: number = 0;
     setStocks((prev) => {
       const newList: Stock[] = prev.slice(0);
+      const stoPutOptions: Option[] = options.filter(
+        (option) => option.callPut === "p"
+      );
+      const optionCostBasis: number = stoPutOptions.reduce(
+        (pv, cv) => pv + cv.strike * 100,
+        0
+      );
       const index: number = newList.findIndex((item) => item === stock);
       const remainder: number =
-        (quantity / newList[index].quantity) * newList[index].costBasis;
+        (quantity / newList[index].quantity) *
+        (newList[index].costBasis - optionCostBasis);
       profit = amount - remainder;
       newList[index].quantity -= quantity;
       newList[index].costBasis -= remainder;

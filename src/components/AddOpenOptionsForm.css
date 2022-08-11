@@ -1,22 +1,30 @@
-.add-open-options-modal {
+.add-open-options-overlay {
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.add-open-options-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #48525b;
+  border-radius: 5px;
+  width: 60%;
 }
 
 .add-open-options-modal form {
   display: flex;
   flex-direction: column;
-  background-color: #48525b;
-  width: 65%;
+  width: 100%;
   padding: 25px 30px 15px 30px;
-  border-radius: 5px;
 }
 
 .add-open-options-modal .add-open-options-inputs {
@@ -27,7 +35,7 @@
 
 .add-open-options-modal input,
 .add-open-options-modal select {
-  width: 50%;
+  width: 40%;
   border-radius: 5px;
   border: none;
   margin: 5px;

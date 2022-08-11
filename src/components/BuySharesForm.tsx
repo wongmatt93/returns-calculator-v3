@@ -16,6 +16,8 @@ const BuySharesForm = ({ stock }: Props) => {
   const [date, setDate] = useState<string>("");
   const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
 
+  Modal.setAppElement("#root");
+
   const openModal = (): void => setModalIsOpen(true);
   const closeModal = (): void => setModalIsOpen(false);
 
@@ -37,6 +39,7 @@ const BuySharesForm = ({ stock }: Props) => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         className="buy-shares-modal"
+        overlayClassName="buy-shares-overlay"
       >
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="buy-shares-inputs">

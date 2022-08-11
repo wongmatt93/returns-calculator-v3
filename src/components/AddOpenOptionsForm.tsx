@@ -23,6 +23,8 @@ const AddOpenOptionsForm = ({ stock, options }: Props) => {
   const [quantity, setQuantity] = useState<number>(0);
   const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
 
+  Modal.setAppElement("#root");
+
   const openModal = (): void => setModalIsOpen(true);
   const closeModal = (): void => setModalIsOpen(false);
 
@@ -62,6 +64,7 @@ const AddOpenOptionsForm = ({ stock, options }: Props) => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         className="add-open-options-modal"
+        overlayClassName="add-open-options-overlay"
       >
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="add-open-options-inputs">

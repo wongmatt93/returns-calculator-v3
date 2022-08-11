@@ -4,17 +4,22 @@ import Stock from "../models/Stock";
 import "./SellSharesForm.css";
 import Modal from "react-modal";
 import React from "react";
+import Option from "../models/Option";
+import { filterSTO } from "../services/filterFunctions";
 
 interface Props {
   stock: Stock;
+  options: Option[];
 }
 
-const SellSharesForm = ({ stock }: Props) => {
+const SellSharesForm = ({ stock, options }: Props) => {
   const { sellShares } = useContext(StocksContext);
   const [amount, setAmount] = useState<number>(0);
   const [quantity, setQuantity] = useState<number>(0);
   const [date, setDate] = useState<string>("");
   const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
+
+  Modal.setAppElement("#root");
 
   const openModal = (): void => setModalIsOpen(true);
   const closeModal = (): void => setModalIsOpen(false);
@@ -24,7 +29,7 @@ const SellSharesForm = ({ stock }: Props) => {
     if (quantity > stock.quantity) {
       alert("You cannot sell more shares than you own");
     } else if (stock.quantity) {
-      sellShares(stock, amount, quantity, date);
+      sellShares(stock, amount, quantity, date, filterSTO(options));
       setModalIsOpen(false);
     } else {
       alert("You don't own any shares");
@@ -40,6 +45,7 @@ const SellSharesForm = ({ stock }: Props) => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         className="sell-shares-modal"
+        overlayClassName="sell-shares-overlay"
       >
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="sell-shares-inputs">

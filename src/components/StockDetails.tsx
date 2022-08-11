@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import StocksContext from "../context/StocksContext";
 import Option from "../models/Option";
 import Stock from "../models/Stock";
@@ -64,9 +64,8 @@ const StockDetails = () => {
     getStockInfo(ticker!).then((response) => {
       setStockInfo(response);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const handleModalClick = (): void => {};
 
   const handleDeleteClick = (): void => {
     if (window.confirm(`Are you sure you want to delete ${stock!.ticker}?`)) {
@@ -84,7 +83,7 @@ const StockDetails = () => {
           </h2>
           <div className="button-container">
             <BuySharesForm stock={stock} />
-            <SellSharesForm stock={stock} />
+            <SellSharesForm stock={stock} options={filteredOptions} />
             <AddDividendForm stock={stock} />
             <AddOpenOptionsForm stock={stock} options={filteredOptions} />
             <button onClick={() => handleDeleteClick()}>Delete Stock</button>

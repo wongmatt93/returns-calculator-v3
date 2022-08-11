@@ -24,7 +24,8 @@ interface StocksModel {
     stock: Stock,
     amount: number,
     quantity: number,
-    date: string
+    date: string,
+    options: Option[]
   ) => void;
   addDividend: (dividend: Dividend) => void;
   addOpenOptions: (option: Option) => void;

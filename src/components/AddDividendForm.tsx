@@ -15,22 +15,22 @@ const AddDividendForm = ({ stock }: Props) => {
   const [date, setDate] = useState<string>("");
   const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
 
+  Modal.setAppElement("#root");
+
   const openModal = (): void => setModalIsOpen(true);
   const closeModal = (): void => setModalIsOpen(false);
 
   const handleSubmit = (e: FormEvent): void => {
     e.preventDefault();
-    {
-      if (stock.quantity) {
-        addDividend({
-          ticker: stock.ticker,
-          amount: amount,
-          date: date,
-        });
-        setModalIsOpen(false);
-      } else {
-        alert("You cannot add dividends if you don't own shares");
-      }
+    if (stock.quantity) {
+      addDividend({
+        ticker: stock.ticker,
+        amount: amount,
+        date: date,
+      });
+      setModalIsOpen(false);
+    } else {
+      alert("You cannot add dividends if you don't own shares");
     }
   };
 
@@ -43,6 +43,7 @@ const AddDividendForm = ({ stock }: Props) => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         className="add-dividend-modal"
+        overlayClassName="add-dividend-overlay"
       >
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="dividend-inputs">
