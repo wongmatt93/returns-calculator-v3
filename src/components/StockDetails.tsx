@@ -66,7 +66,9 @@ const StockDetails = () => {
     });
   }, []);
 
-  const handleClick = (): void => {
+  const handleModalClick = (): void => {};
+
+  const handleDeleteClick = (): void => {
     if (window.confirm(`Are you sure you want to delete ${stock!.ticker}?`)) {
       deleteStock(stock!);
       navigate("/");
@@ -75,17 +77,17 @@ const StockDetails = () => {
 
   return (
     <div className="StockDetails">
-      {stock ? (
+      {stock && stockInfo ? (
         <>
           <h2>
-            {stock.ticker}: {stockInfo?.Name}
+            {stock.ticker}: {stockInfo.Name}
           </h2>
-          <div>
-            <button>Buy Shares</button>
-            <button>Sell Shares</button>
-            <button>Add Dividends</button>
-            <button>Open Options</button>
-            <button onClick={() => handleClick()}>Delete Stock</button>
+          <div className="button-container">
+            <BuySharesForm stock={stock} />
+            <SellSharesForm stock={stock} />
+            <AddDividendForm stock={stock} />
+            <AddOpenOptionsForm stock={stock} options={filteredOptions} />
+            <button onClick={() => handleDeleteClick()}>Delete Stock</button>
           </div>
           <table className="individual-stock-table">
             <thead>
@@ -114,12 +116,8 @@ const StockDetails = () => {
               </tr>
             </tbody>
           </table>
-          <BuySharesForm stock={stock} />
-          <SellSharesForm stock={stock} />
-          <AddOpenOptionsForm stock={stock} options={filteredOptions} />
           <AddCloseOptionsForm stock={stock} />
           <StockOpenOptionsTable options={filteredOptions} />
-          <AddDividendForm stock={stock} />
           <DividendTable dividends={filteredDividends} />
         </>
       ) : (

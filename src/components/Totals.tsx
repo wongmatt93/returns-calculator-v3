@@ -15,11 +15,12 @@ const Totals = ({ stocks }: Props) => {
 
   return (
     <table className="Totals">
+      <caption>Totals</caption>
       <thead>
         <tr>
-          <th>Total Cost Basis</th>
-          <th>Total Cash Return</th>
-          <th>Total Percent Return</th>
+          <th>Cost Basis</th>
+          <th>Cash Return</th>
+          <th>Percent Return</th>
         </tr>
       </thead>
       <tbody>

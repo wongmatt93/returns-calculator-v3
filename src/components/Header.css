@@ -1,8 +1,16 @@
 .Header {
-  padding: 20px;
-  text-align: center;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .Header h1 {
   color: #93a8ac;
+  font-family: "Dosis", sans-serif;
+}
+
+.Header p {
+  color: #d8d4d5;
 }

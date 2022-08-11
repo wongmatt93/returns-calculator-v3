@@ -7,6 +7,9 @@ const Header = () => {
       <Link to="/" style={{ textDecoration: "none" }}>
         <h1>Returns Calculator</h1>
       </Link>
+      <Link to="/" style={{ textDecoration: "none" }}>
+        <p>Home</p>
+      </Link>
     </header>
   );
 };

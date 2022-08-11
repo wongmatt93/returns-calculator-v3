@@ -4,6 +4,8 @@ import Option from "../models/Option";
 import Stock from "../models/Stock";
 import { filterOptionsThatRequireStocks } from "../services/filterFunctions";
 import "./AddOpenOptionsForm.css";
+import Modal from "react-modal";
+import React from "react";
 
 interface Props {
   stock: Stock;
@@ -19,6 +21,10 @@ const AddOpenOptionsForm = ({ stock, options }: Props) => {
   const [premium, setPremium] = useState<string>("");
   const [expiration, setExpiration] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(0);
+  const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
+
+  const openModal = (): void => setModalIsOpen(true);
+  const closeModal = (): void => setModalIsOpen(false);
 
   const handleSubmit = (e: FormEvent): void => {
     e.preventDefault();
@@ -45,73 +51,97 @@ const AddOpenOptionsForm = ({ stock, options }: Props) => {
           open: true,
         });
       }
+      setModalIsOpen(false);
     }
   };
 
   return (
-    <form className="AddOpenOptionsForm" onSubmit={(e) => handleSubmit(e)}>
-      <label htmlFor="date">Transaction Date</label>
-      <input
-        type="date"
-        name="date"
-        id="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-      />
-      <label htmlFor="type">Transaction Type</label>
-      <select
-        name="type"
-        id="type"
-        value={type}
-        onChange={(e) => setType(e.target.value)}
+    <div className="AddOpenOptionsForm">
+      <button onClick={openModal}>Open Options</button>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        className="add-open-options-modal"
       >
-        <option value="bto">Buy To Open</option>
-        <option value="sto">Sell To Open</option>
-      </select>
-      <label htmlFor="callPut">Call/Put</label>
-      <select
-        name="callPut"
-        id="callPut"
-        value={callPut}
-        onChange={(e) => setCallPut(e.target.value)}
-      >
-        <option value="c">Call</option>
-        <option value="p">Put</option>
-      </select>
-      <label htmlFor="strike">Strike Price</label>
-      <input
-        type="number"
-        name="strike"
-        id="strike"
-        value={strike}
-        onChange={(e) => setStrike(e.target.value)}
-      />
-      <label htmlFor="expiration">Expiration Date</label>
-      <input
-        type="date"
-        name="expiration"
-        id="expiration"
-        value={expiration}
-        onChange={(e) => setExpiration(e.target.value)}
-      />
-      <label htmlFor="premium">Premium</label>
-      <input
-        type="text"
-        name="premium"
-        id="premium"
-        value={premium}
-        onChange={(e) => setPremium(e.target.value)}
-      />
-      <label htmlFor="quantity">Quantity</label>
-      <input
-        type="number"
-        name="quantity"
-        id="quantity"
-        value={quantity}
-        onChange={(e) => setQuantity(parseInt(e.target.value))}
-      />
-      <button>Add Option</button>
-    </form>
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <div className="add-open-options-inputs">
+            <label htmlFor="date">Transaction Date</label>
+            <input
+              type="date"
+              name="date"
+              id="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </div>
+          <div className="add-open-options-inputs">
+            <label htmlFor="type">Transaction Type</label>
+            <select
+              name="type"
+              id="type"
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+            >
+              <option value="bto">Buy To Open</option>
+              <option value="sto">Sell To Open</option>
+            </select>
+          </div>
+          <div className="add-open-options-inputs">
+            <label htmlFor="callPut">Call/Put</label>
+            <select
+              name="callPut"
+              id="callPut"
+              value={callPut}
+              onChange={(e) => setCallPut(e.target.value)}
+            >
+              <option value="c">Call</option>
+              <option value="p">Put</option>
+            </select>
+          </div>
+          <div className="add-open-options-inputs">
+            <label htmlFor="strike">Strike Price</label>
+            <input
+              type="number"
+              name="strike"
+              id="strike"
+              value={strike}
+              onChange={(e) => setStrike(e.target.value)}
+            />
+          </div>
+          <div className="add-open-options-inputs">
+            <label htmlFor="expiration">Expiration Date</label>
+            <input
+              type="date"
+              name="expiration"
+              id="expiration"
+              value={expiration}
+              onChange={(e) => setExpiration(e.target.value)}
+            />
+          </div>
+          <div className="add-open-options-inputs">
+            <label htmlFor="premium">Premium</label>
+            <input
+              type="text"
+              name="premium"
+              id="premium"
+              value={premium}
+              onChange={(e) => setPremium(e.target.value)}
+            />
+          </div>
+          <div className="add-open-options-inputs">
+            <label htmlFor="quantity">Quantity</label>
+            <input
+              type="number"
+              name="quantity"
+              id="quantity"
+              value={quantity}
+              onChange={(e) => setQuantity(parseInt(e.target.value))}
+            />
+          </div>
+          <button>Add Option</button>
+        </form>
+      </Modal>
+    </div>
   );
 };
 

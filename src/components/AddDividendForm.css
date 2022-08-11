@@ -1,0 +1,62 @@
+.add-dividend-modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.add-dividend-modal form {
+  display: flex;
+  flex-direction: column;
+  background-color: #48525b;
+  padding: 25px 30px 15px 30px;
+  border-radius: 5px;
+}
+
+.add-dividend-modal .dividend-inputs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-dividend-modal input {
+  width: 50%;
+  border-radius: 5px;
+  border: none;
+  margin: 5px;
+  height: 20px;
+  text-align: center;
+}
+
+.add-dividend-modal input::-webkit-outer-spin-button,
+.add-dividend-modal input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.add-dividend-modal button {
+  font-family: "Lato", sans-serif;
+  font-size: 12px;
+  background-color: #d8d4d5;
+  border: 1px solid #d8d4d5;
+  border-radius: 5px;
+  position: relative;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+  margin: 15px;
+}
+
+.add-dividend-modal button:hover {
+  cursor: pointer;
+  background-color: #bbb4b6;
+}
+
+.add-dividend-modal button:active {
+  top: 1px;
+}
