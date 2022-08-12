@@ -92,19 +92,14 @@ const StockDetails = () => {
             <thead>
               <tr>
                 <th>Quantity</th>
-                <th>Open Options</th>
                 <th>Cost Basis</th>
                 <th>Cash Return</th>
-                <th>Percent Return</th>
+                <th>Return %</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>{stock.quantity}</td>
-                <td>
-                  <div>{`BTO: ${openBTO.length}`}</div>
-                  <div>{`STO: ${openSTO.length}`}</div>
-                </td>
                 <td>{formatMoney(stock.costBasis)}</td>
                 <td>{formatMoney(stock.cashReturn)}</td>
                 <td>
@@ -115,7 +110,6 @@ const StockDetails = () => {
               </tr>
             </tbody>
           </table>
-          <AddCloseOptionsForm stock={stock} />
           <StockOpenOptionsTable options={filteredOptions} />
           <DividendTable dividends={filteredDividends} />
         </>

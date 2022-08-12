@@ -115,11 +115,11 @@ const StocksContextProvider = ({ children }: Props) => {
 
   const addCloseOptions = (
     options: Option[],
-    openOptions: Option[],
+    openQuantity: number,
     closeOption: Option,
     quantity: number
   ): void => {
-    if (quantity <= openOptions.length) {
+    if (quantity <= openQuantity) {
       for (let i: number = 0; i < quantity; i++) {
         setOptions((prev) => [...prev, closeOption]);
         setOptions((prev) => {

@@ -1,0 +1,71 @@
+.add-close-options-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.add-close-options-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #48525b;
+  border-radius: 5px;
+  width: 55%;
+}
+
+.add-close-options-modal form {
+  display: flex;
+  flex-direction: column;
+  padding: 25px 30px 15px 30px;
+  width: 100%;
+}
+
+.add-close-options-modal .add-close-options-inputs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-close-options-modal input {
+  width: 40%;
+  border-radius: 5px;
+  border: none;
+  margin: 5px;
+  height: 20px;
+  text-align: center;
+}
+
+.add-close-options-modal input::-webkit-outer-spin-button,
+.add-close-options-modal input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.add-close-options-modal button {
+  font-family: "Lato", sans-serif;
+  font-size: 12px;
+  background-color: #d8d4d5;
+  border: 1px solid #d8d4d5;
+  border-radius: 5px;
+  position: relative;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+  margin: 15px;
+}
+
+.add-close-options-modal button:hover {
+  cursor: pointer;
+  background-color: #bbb4b6;
+}
+
+.add-close-options-modal button:active {
+  top: 1px;
+}

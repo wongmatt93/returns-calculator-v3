@@ -1,0 +1,30 @@
+.StockOpenOptionsTable {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.StockOpenOptionsTable th {
+  background-color: #66635b;
+  padding: 3px 10px;
+}
+
+.StockOpenOptionsTable td {
+  background-color: #a59e8c;
+  padding: 10px;
+}
+
+.StockOpenOptionsTable .option-type {
+  width: 15%;
+}
+
+.StockOpenOptionsTable .option-name {
+  width: 45%;
+}
+
+.StockOpenOptionsTable .option-quantity {
+  width: 15%;
+}
+
+.StockOpenOptionsTable .option-status {
+  width: 25%;
+}

@@ -1,10 +1,8 @@
-export default interface Option {
+export default interface OptionDisplay {
   ticker: string;
-  transactionDate: string;
   callPut: string;
   type: string;
   strike: number;
   expirationDate: string;
-  premium: number;
-  open?: boolean;
+  quantity: number;
 }

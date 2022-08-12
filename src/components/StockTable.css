@@ -6,11 +6,11 @@
 
 .StockTable th {
   background-color: #66635b;
-  padding: 0.5em;
+  padding: 3px 10px;
   width: 25%;
 }
 
 .StockTable td {
   background-color: #a59e8c;
-  padding: 0.5em;
+  padding: 10px;
 }

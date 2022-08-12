@@ -31,7 +31,7 @@ interface StocksModel {
   addOpenOptions: (option: Option) => void;
   addCloseOptions: (
     options: Option[],
-    openOptions: Option[],
+    openQuantity: number,
     option: Option,
     quantity: number
   ) => void;

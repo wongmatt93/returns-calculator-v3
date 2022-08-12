@@ -14,7 +14,7 @@ const StockTable = ({ stocks }: Props) => {
           <th>Ticker</th>
           <th>Cost Basis</th>
           <th>Cash Returns</th>
-          <th>Percent Returns</th>
+          <th>Returns %</th>
         </tr>
       </thead>
       <tbody>

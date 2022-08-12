@@ -1,29 +1,24 @@
-import Option from "../models/Option";
+import OptionDisplay from "../models/OptionDisplay";
 import { formatMoney } from "../services/formatFunctions";
+import AddCloseOptionsForm from "./AddCloseOptionsForm";
 import "./StockOpenOptionRow.css";
 
 interface Props {
-  option: Option;
+  option: OptionDisplay;
 }
 
 const StockOpenOptionRow = ({ option }: Props) => {
   return (
     <tr className="StockOpenOptionRow">
       <td>{option.type.toUpperCase()}</td>
-      <td>{option.callPut.toUpperCase()}</td>
-      <td>{formatMoney(option.strike)}</td>
-      <td>{option.expirationDate}</td>
-      <td>{option.count}</td>
       <td>
-        {option.open ? (
-          option.type === "bto" ? (
-            <button>Sell To Close</button>
-          ) : (
-            <button>Buy To Close</button>
-          )
-        ) : (
-          "Closed"
-        )}
+        {`${option.expirationDate} ${formatMoney(
+          option.strike
+        )} ${option.callPut.toUpperCase()}`}
+      </td>
+      <td>{option.quantity}</td>
+      <td>
+        <AddCloseOptionsForm optionDisplay={option} />
       </td>
     </tr>
   );

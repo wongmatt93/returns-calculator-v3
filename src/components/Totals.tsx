@@ -20,7 +20,7 @@ const Totals = ({ stocks }: Props) => {
         <tr>
           <th>Cost Basis</th>
           <th>Cash Return</th>
-          <th>Percent Return</th>
+          <th>Percent %</th>
         </tr>
       </thead>
       <tbody>
